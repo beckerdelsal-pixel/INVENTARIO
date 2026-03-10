@@ -49,4 +49,38 @@ public class ProveedoresBDD {
 		}
 		return proveedores;
 	}
+	
+	
+	public void crear(Proveedor proveedor) throws KrakeDevException{
+		Connection con = null;
+		try {
+			con = ConexionBDD.obtenerConexion();
+			PreparedStatement ps = con.prepareStatement("insert into proveedores(identificador, tipo_documento, nombre, telefono, "
+					+ "correo, direccion) values(?, ?, ?, ?, ?, ?)");
+			ps.setString(1, proveedor.getIdentificador());
+			ps.setString(2, proveedor.getTipoDocumento().getCodigo());
+			ps.setString(3, proveedor.getNombre());
+			ps.setString(4, proveedor.getTelefono());
+			ps.setString(5, proveedor.getCorreo());
+			ps.setString(6, proveedor.getDireccion());
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new KrakeDevException("Error al crear el proveedor. Detalle: "+ e.getMessage());
+		} catch (KrakeDevException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}finally {
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 }
