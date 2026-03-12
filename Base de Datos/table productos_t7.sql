@@ -9,7 +9,7 @@ CREATE TABLE productos (
     coste_producto NUMERIC(10,2) NOT NULL,
     categoria INT NOT NULL,
     stock INT NOT NULL,
-    FOREIGN KEY (codigo_udm) REFERENCES unidades_medida(codigo_udm),
+    
     FOREIGN KEY (categoria) REFERENCES categorias(codigo_cat)
 );
 
@@ -19,3 +19,8 @@ INSERT INTO productos VALUES
 ('P003','Mostaza','kg',0.95,true,0.89,3,0);
 
 select * from productos;
+
+ALTER TABLE productos 
+ADD CONSTRAINT productos_codigo_udm_fkey 
+FOREIGN KEY (codigo_udm) 
+REFERENCES unidades_medida (nombre);
